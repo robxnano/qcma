@@ -29,6 +29,10 @@
 #include <QThread>
 #include <QDebug>
 
+#ifdef _MSC_VER
+#define strcasecmp stricmp
+#endif
+
 #include <algorithm>
 
 const int ohfi_array[] = {

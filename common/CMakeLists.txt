@@ -40,19 +40,27 @@ else()
     target_link_libraries(qcma_common PUBLIC VitaMTP::VitaMTP)
 endif()
 
-target_compile_options(qcma_common PUBLIC
-    -Wall
-    -Wdisabled-optimization
-    -Wextra
-    -Wformat=2
-    -Winit-self
-    -Wno-format-nonliteral
-    -Wno-missing-field-initializers
-    -Wno-unused
-    -Wno-write-strings
-    -Woverloaded-virtual
-    -Wundef
-)
+if(MSVC)
+    target_compile_definitions(qcma_common PUBLIC
+        _CRT_SECURE_NO_WARNINGS
+        _CRT_NONSTDC_NO_WARNINGS
+    )
+    set_source_files_properties(capability.cpp PROPERTIES COMPILE_OPTIONS -Zc:strictStrings-)
+else()
+    target_compile_options(qcma_common PUBLIC
+        -Wall
+        -Wdisabled-optimization
+        -Wextra
+        -Wformat=2
+        -Winit-self
+        -Wno-format-nonliteral
+        -Wno-missing-field-initializers
+        -Wno-unused
+        -Wno-write-strings
+        -Woverloaded-virtual
+        -Wundef
+    )
+endif()
 
 # Resources
 set(commonrc_resource_files
@@ -87,7 +95,7 @@ if(UNIX AND NOT MACOS)
     )
 endif()
 
-if(WIN32)
+if(WIN32 AND NOT MSVC)
     target_compile_options(qcma_common PUBLIC -mno-ms-bitfields)
 endif()
 
