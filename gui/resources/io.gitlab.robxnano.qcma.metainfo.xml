@@ -19,7 +19,7 @@
   <url type="bugtracker">https://github.com/robxnano/qcma/issues</url>
   <branding>
     <color type="primary" scheme_preference="light">#669cf6</color>
-    <color type="primary" scheme_preference="dark">#281e73</color>
+    <color type="primary" scheme_preference="dark">#281e70</color>
   </branding>
   <provides>
     <binary>qcma</binary>
@@ -35,7 +35,11 @@
     <display_length compare="ge">640</display_length>
   </requires>
   <releases>
-    <release version="0.4.2" date="2018-12-26"/>
+    <release version="0.5.0" date="2025-05-04">
+      <description>
+        <p>Updated to Qt 6.</p>
+      </description>
+    </release>
   </releases>
   <content_rating type="oars-1.1"/>
 
