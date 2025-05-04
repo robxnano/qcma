@@ -1,0 +1,24 @@
+{
+  "dependencies": [
+    "libiconv",
+    {
+      "name": "qtbase",
+      "features": [
+        "gui",
+        "network",
+        "sql",
+        "widgets"
+      ]
+    },
+    {
+      "name": "qttools",
+      "features": ["linguist"]
+    },
+    "libxml2",
+    {
+      "name": "pthreads",
+      "platform": "windows | xbox | uwp"
+    },
+    "libusb"
+  ]
+}

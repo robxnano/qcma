@@ -11,3 +11,7 @@ buildscripts/windows/driver/QcmaDriver_*.exe
 /packaging/appimage/*/
 /packaging/flatpak/*/
 *.snap
+.vs/
+.vscode/
+CMakeSettings.json
+out/
