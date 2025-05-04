@@ -6,5 +6,8 @@ org.qcma.*.xml
 buildscripts/windows/driver/QcmaDriver_*.exe
 /build/
 /build-*/
+/packaging/appimage/*.AppImage
+/packaging/appimage/*.tar.gz
+/packaging/appimage/*/
 /packaging/flatpak/*/
 *.snap

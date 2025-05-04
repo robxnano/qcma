@@ -9,7 +9,7 @@ This is an updated version of QCMA (Originally created by [codestation](https://
 - [x] Replace qmake project with CMake
 - [x] Flatpak package manifest
 - [x] Snapcraft manifest
-- [ ] AppImage builder
+- [x] AppImage builder
 - [ ] Visual Studio support (using vcpkg for dependencies)
 - [ ] Improve user interface and remove reliance on system tray icon
 - [ ] Update thumbnailing code to support latest ffmpeg

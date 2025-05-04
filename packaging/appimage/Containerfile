@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1
+FROM debian:12 as base
+ARG GIT_TAG=main
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
+apt-get install -y build-essential cmake curl file g++ git \
+libnotify-dev libusb-1.0-0-dev libxml2-dev ninja-build \
+qt6-base-dev qt6-l10n-tools qt6-tools-dev qt6-tools-dev-tools
+RUN git clone "https://github.com/robxnano/qcma.git" --depth 1 --branch "$GIT_TAG"
+WORKDIR qcma
+
+FROM base as test
+ARG JOBS=6
+ARG PREFIX=/usr
+RUN cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${PREFIX}"
+RUN cmake --build build --parallel
+
+FROM test as install
+ARG PREFIX=/usr
+RUN cmake --install build --prefix="/install${PREFIX}"
+WORKDIR /install
+RUN tar -czf /qcma-linux-$(uname -m).tar.gz "$(ls)"
+
+FROM install as build-appimage
+RUN export ARCH="$(uname -m)" && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-${ARCH}.AppImage && \
+chmod +x linuxdeploy-*.AppImage && \
+./linuxdeploy-${ARCH}.AppImage --appimage-extract-and-run --appdir /install --output appimage
+RUN export ARCH="$(uname -m)" && \
+curl -LO https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-qt-${ARCH}.AppImage && \
+chmod +x linuxdeploy-*.AppImage && \
+./linuxdeploy-plugin-qt-${ARCH}.AppImage --appimage-extract-and-run --appdir /install
+RUN export ARCH="$(uname -m)" && \
+rm linuxdeploy-plugin-qt-${ARCH}.AppImage && \
+./linuxdeploy-${ARCH}.AppImage --appimage-extract-and-run --appdir /install --output appimage
+
+FROM scratch as appimage
+COPY --from=build-appimage /install/Qcma-x86_64.AppImage /
+
+FROM scratch as binaries
+COPY --from=install /qcma-linux-*.tar.gz /
