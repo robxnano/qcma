@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2025 Rob Hall -->
+<component type="desktop-application">
+  <id>io.gitlab.robxnano.qcma</id>
+  <translation type="qt">qcma</translation>
+  <developer id="io.gitlab.robxnano">
+    <name>Rob Hall</name>
+  </developer>
+  <launchable type="desktop-id">io.gitlab.robxnano.qcma.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Qcma</name>
+  <summary>Content Manager for PS Vita</summary>
+  <description>
+    <p>Qcma will allow you to backup your PS Vita games and manage your songs, videos and photos.</p>
+    <p>You can connect your Vita wirelessly or via USB.</p>
+  </description>
+  <url type="homepage">https://github.com/robxnano/qcma</url>
+  <url type="bugtracker">https://github.com/robxnano/qcma/issues</url>
+  <branding>
+    <color type="primary" scheme_preference="light">#669cf6</color>
+    <color type="primary" scheme_preference="dark">#281e73</color>
+  </branding>
+  <provides>
+    <binary>qcma</binary>
+  </provides>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
+  <supports>
+    <control>touch</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">640</display_length>
+  </requires>
+  <releases>
+    <release version="0.4.2" date="2018-12-26"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+
+</component>

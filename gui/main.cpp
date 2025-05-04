@@ -73,7 +73,6 @@ static bool setup_handlers()
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(commonrc);
-    Q_INIT_RESOURCE(translations);
 
     if(SingleApplication::sendMessage(QObject::tr("An instance of Qcma is already running"))) {
         return 0;
@@ -112,7 +111,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    if(translator.load("qcma_" + locale, ":/resources/translations")) {
+    if(translator.load("qcma_" + locale, ":/i18n")) {
         app.installTranslator(&translator);
     } else {
         qWarning() << "Cannot load translation for locale:" << locale;
