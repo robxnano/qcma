@@ -116,7 +116,7 @@ void CmaClient::connectWireless()
             // if is active then something happened while setting the socket, wait a little and try again
             if(isActive()) {
                 qDebug("Error getting wireless connection");
-                Sleeper::sleep(2000);
+                QThread::sleep(2000);
             } else {
                 qDebug("Wireless connection cancelled by the user");
             }

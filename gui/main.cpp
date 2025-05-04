@@ -34,16 +34,10 @@
 #include "singleapplication.h"
 #include "mainwidget.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 static void noMessageOutput(QtMsgType type, const QMessageLogContext &, const QString & str)
 {
-    const char * msg = str.toStdString().c_str();
-#else
-static void noMessageOutput(QtMsgType type, const char *msg)
-{
-#endif
     Q_UNUSED(type);
-    Q_UNUSED(msg);
+    Q_UNUSED(str);
 }
 
 #ifndef Q_OS_WIN32
@@ -102,16 +96,8 @@ int main(int argc, char *argv[])
         VitaMTP_Set_Logging(VitaMTP_VERBOSE);
     } else {
         VitaMTP_Set_Logging(VitaMTP_NONE);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
         qInstallMessageHandler(noMessageOutput);
-#else
-        qInstallMsgHandler(noMessageOutput);
-#endif
     }
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
 
     QTextStream(stdout) << "Starting Qcma " << QCMA_VER << Qt::endl;
 

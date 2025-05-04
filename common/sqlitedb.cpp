@@ -29,17 +29,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-#include <QStandardPaths>
-#else
-#include <QDesktopServices>
-#define QStandardPaths QDesktopServices
-#define writableLocation storageLocation
-#endif
-
 #include <QSettings>
 #include <QSqlQuery>
+#include <QStandardPaths>
 
 static const char create_adjacent[] = "CREATE TABLE IF NOT EXISTS adjacent_objects ("
                                       "parent_id INTEGER NOT NULL REFERENCES object_node(object_id) ON DELETE CASCADE,"

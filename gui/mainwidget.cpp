@@ -264,7 +264,7 @@ void MainWidget::receiveMessage(QString message)
     // a timeout is added before the popups are displayed to prevent them from
     // appearing in the wrong location
     if(!sleptOnce) {
-        Sleeper::sleep(1);
+        QThread::sleep(1);
         sleptOnce = true;
     }
 

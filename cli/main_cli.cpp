@@ -35,15 +35,11 @@
 #include "singlecoreapplication.h"
 #include "headlessmanager.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 static void noDebugOutput(QtMsgType type, const QMessageLogContext &, const QString & msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
     const char *message = localMsg.constData();
-#else
-static void noDebugOutput(QtMsgType type, const char *message)
-{
-#endif
+
     switch (type) {
     case QtDebugMsg:
         break;
@@ -57,11 +53,9 @@ static void noDebugOutput(QtMsgType type, const char *message)
         fprintf(stderr, "Fatal: %s\n", message);
         abort();
         break;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
     case QtInfoMsg:
         fprintf(stderr, "Info: %s\n", message);
         break;
-#endif
     }
 }
 
@@ -125,16 +119,8 @@ int main(int argc, char *argv[])
         VitaMTP_Set_Logging(VitaMTP_VERBOSE);
     } else {
         VitaMTP_Set_Logging(VitaMTP_NONE);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
         qInstallMessageHandler(noDebugOutput);
-#else
-        qInstallMsgHandler(noDebugOutput);
-#endif
     }
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
 
     QTextStream(stdout) << "Starting Qcma " << QCMA_VER << Qt::endl;
 
