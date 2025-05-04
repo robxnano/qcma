@@ -1,0 +1,88 @@
+name: qcma
+adopt-info: qcma
+grade: stable
+confinement: strict
+base: core24
+compression: lzo
+platforms:
+  amd64:
+  arm64:
+
+apps:
+  qcma:
+    command: usr/bin/qcma
+    common-id: io.gitlab.robxnano.qcma
+    extensions:
+      - kde-neon-6
+    desktop: usr/share/applications/io.gitlab.robxnano.qcma.desktop
+    plugs:
+      - gsettings
+      - mount-observe
+      - network
+      - raw-usb
+  cli:
+    command: usr/bin/qcma_cli
+    common-id: io.gitlab.robxnano.qcma_cli
+    extensions:
+      - kde-neon-6
+
+parts:
+  vitamtp:
+    source-type: git
+    source: https://github.com/robxnano/vitamtp.git
+    source-commit: 66555f2c1a06b524dd830f63e90867354e099978
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+    build-packages:
+      - libxml2-dev
+    stage-packages:
+      - libxml2
+    prime:
+      - -usr/etc
+      - -usr/include
+      - -usr/lib/*/cmake
+      - -usr/lib/*/lib*.a
+      - -usr/lib/*/lib*.la
+      - -usr/lib/*/lib*.so
+      - -usr/lib/*/pkgconfig
+      - -usr/lib/pkgconfig
+      - -usr/share/doc
+  qcma:
+    after: [vitamtp]
+    source-type: local
+    source: .
+    parse-info:
+      - usr/share/metainfo/io.gitlab.robxnano.qcma.metainfo.xml
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DENABLE_FFMPEG=OFF
+    build-packages:
+      - libnotify-dev
+    stage-packages:
+      - libnotify4
+    prime:
+      - -usr/etc
+      - -usr/include
+      - -usr/lib/*/cmake
+      - -usr/lib/*/lib*.a
+      - -usr/lib/*/lib*.la
+      - -usr/lib/*/lib*.so
+      - -usr/lib/*/pkgconfig
+      - -usr/lib/pkgconfig
+      - -usr/share/doc
+
+  # Find files provided by the base and platform snap and ensure they aren't
+  # duplicated in this snap
+  cleanup:
+    after: [qcma]
+    plugin: nil
+    build-snaps: [core24, gtk-common-themes, kf6-core24]
+    override-prime: |
+      set -eux
+      for snap in "core24" "gtk-common-themes" "kf6-core24"; do
+        cd "/snap/$snap/current" && find . -type f,l -name *.so.* -exec rm -f "$CRAFT_PRIME/{}" \;
+      done

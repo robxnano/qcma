@@ -7,3 +7,4 @@ buildscripts/windows/driver/QcmaDriver_*.exe
 /build/
 /build-*/
 /packaging/flatpak/*/
+*.snap
