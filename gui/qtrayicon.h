@@ -22,6 +22,14 @@
 
 #include "trayindicator.h"
 
+#ifdef Q_OS_LINUX
+#undef signals
+extern "C" {
+#include <libnotify/notify.h>
+}
+#define signals public
+#endif
+
 class QAction;
 class QSystemTrayIcon;
 
@@ -48,6 +56,9 @@ private:
     QAction *about_qt;
 
     QSystemTrayIcon *m_tray_icon;
+#ifdef Q_OS_LINUX
+    NotifyNotification *notif;
+#endif
 };
 
 #endif // QTRAYICON_H

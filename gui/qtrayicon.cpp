@@ -23,14 +23,6 @@
 #include <QMenu>
 #include <QSystemTrayIcon>
 
-#ifdef Q_OS_LINUX
-#undef signals
-extern "C" {
-#include <libnotify/notify.h>
-}
-#define signals public
-#endif
-
 QTrayIcon::QTrayIcon(QWidget *obj_parent)
     : TrayIndicator(obj_parent)
 {
@@ -43,6 +35,7 @@ QTrayIcon::QTrayIcon(QWidget *obj_parent)
 QTrayIcon::~QTrayIcon()
 {
 #ifdef Q_OS_LINUX
+    notify_notification_close(notif, NULL);
     notify_uninit();
 #endif
 }
@@ -77,15 +70,17 @@ void QTrayIcon::init()
     m_tray_icon = new QSystemTrayIcon(this);
     m_tray_icon->setToolTip("Qcma");
     m_tray_icon->setContextMenu(tray_icon_menu);
+#ifdef Q_OS_LINUX
+    notif = notify_notification_new(qPrintable(tr("Information")), NULL, "dialog-information");
+#endif
 }
 
 
 void QTrayIcon::showMessage(const QString &title, const QString &message)
 {
 #ifdef Q_OS_LINUX
-    NotifyNotification *notif = notify_notification_new(qPrintable(title), qPrintable(message), "dialog-information");
+    notify_notification_update(notif, qPrintable(title), qPrintable(message), "dialog-information");
     notify_notification_show(notif, NULL);
-    g_object_unref(G_OBJECT(notif));
 #else
     m_tray_icon->showMessage(title, message);
 #endif
