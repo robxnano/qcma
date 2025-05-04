@@ -35,6 +35,12 @@
     <display_length compare="ge">640</display_length>
   </requires>
   <releases>
+    <release version="0.5.1" date="2025-05-04">
+      <description>
+        <p>Add menubar to backup manager.</p>
+        <p>Clear notifications when app quits on Linux.</p>
+      </description>
+    </release>
     <release version="0.5.0" date="2025-05-04">
       <description>
         <p>Updated to Qt 6.</p>

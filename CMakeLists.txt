@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 cmake_minimum_required(VERSION 3.16...4.0)
-project(Qcma VERSION 0.5.0 LANGUAGES C CXX)
+project(Qcma VERSION 0.5.1 LANGUAGES C CXX)
 
 include(FetchContent)
 include(FindPkgConfig)
