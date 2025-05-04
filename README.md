@@ -1,5 +1,29 @@
-QCMA
+Qcma
 ====
+
+This is an updated version of QCMA (Originally created by [codestation](https://github.com/codestation/qcma)) which supports Qt 6 and works on current Linux distributions. I will also be packaging it in popular distribution formats including Flatpak.
+
+## Status and Todo
+
+- [x] Qt 6 build support
+- [ ] Replace qmake project with CMake
+- [ ] Flatpak package manifest
+- [ ] Snapcraft manifest
+- [ ] AppImage builder
+- [ ] Visual Studio support (using vcpkg for dependencies)
+- [ ] Improve user interface and remove reliance on system tray icon
+- [ ] Update thumbnailing code to support latest ffmpeg
+- [ ] XDG USB portal support
+
+## Installing udev rules
+
+Unlike traditional packages, Flatpak apps cannot install udev rules directly. Instead you will have to manually copy the rules file to the /etc/udev/rules.d directory in order to connect your PS Vita via USB:
+
+```
+sudo cp /var/lib/flatpak/app/io.gitlab.robxnano.qcma/current/active/files/lib/udev/rules.d/60-psvita.rules /etc/udev/rules.d/
+```
+
+## Original Description
 
 QCMA is a cross-platform application to provide a Open Source implementation
 of the original Content Manager Assistant that comes with the PS Vita. QCMA is
@@ -45,21 +69,23 @@ Packages for Ubuntu, Fedora, Debian and openSUSE are available [here](https://so
 Installers for Windows and macOS are available [here](https://github.com/codestation/qcma/releases/latest).
 
 ## Dependencies
-* [Qt 5.x](http://www.qt.io/)
+* [Qt 6.x](http://www.qt.io/)
 
-* [VitaMTP fork](https://github.com/codestation/vitamtp)
+* [VitaMTP fork](https://github.com/robxnano/vitamtp)
 
-* [FFmpeg](http://www.ffmpeg.org/)
+* [FFmpeg 4 (optional)](http://www.ffmpeg.org/)
 
 * [libnotify](http://library.gnome.org/devel/notification-spec/)
 
 #### Where do I get the source code?
-Check the GitHub repo here: https://github.com/codestation/qcma
+Check the GitHub repo here: https://github.com/robxnano/qcma
 
 #### I want to contribute 
-Contact me on [GitHub](https://github.com/codestation/) 
+Contact me on [GitHub](https://github.com/robxnano/) 
 
 ## Thanks to
+[codestation](https://github.com/codestation/qcma/) - original creator.
+
 [Yifan Lu](https://github.com/yifanlu/vitamtp/) - for the vitamtp library and
 the reference implementation of OpenCMA.
 
