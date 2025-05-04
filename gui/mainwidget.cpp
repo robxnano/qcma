@@ -116,8 +116,8 @@ void MainWidget::prepareApplication(bool showSystray)
         db = new SQLiteDB();
     }
 
-    configForm = new ConfigWidget();
     backupForm = new BackupManagerForm(db, this);
+    configForm = new ConfigWidget(backupForm);
     managerForm = new ClientManager(db, this);
     connectSignals();
 
@@ -153,31 +153,31 @@ void MainWidget::openManager()
 
 void MainWidget::showAboutDialog()
 {
-    QMessageBox about;
+    QMessageBox about(backupForm);
 
-    about.setText(QString("Qcma ") + QCMA_VER);
+    about.setModal(true);
+    about.setText(QString("<h3>Qcma</h3>") + QCMA_VER);
     about.setWindowTitle(tr("About Qcma"));
-#ifndef QCMA_BUILD_HASH
-    about.setInformativeText(tr("Copyright (C) 2016  Codestation") + "\n");
-#else
-    about.setInformativeText(tr("Copyright (C) 2016  Codestation\n\nbuild hash: %1\nbuild branch: %2").arg(QCMA_BUILD_HASH).arg(QCMA_BUILD_BRANCH));
-#endif
-    about.setStandardButtons(QMessageBox::Ok);
+
+    about.setInformativeText(tr("Qcma allows you to backup your PS Vita games & manage your songs, "
+        "videos & photos. You can connect your Vita wirelessly or via USB.")
+        + "\n\n" + tr("Copyright (C) 2016 Codestation"));
+
+    about.setStandardButtons(QMessageBox::Close);
     about.setIconPixmap(QPixmap(":/main/resources/images/qcma.png"));
-    about.setDefaultButton(QMessageBox::Ok);
+    about.setDefaultButton(QMessageBox::Close);
 
     // hack to expand the messagebox minimum size
     QSpacerItem* horizontalSpacer = new QSpacerItem(300, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QGridLayout* widget_layout = (QGridLayout*)about.layout();
     widget_layout->addItem(horizontalSpacer, widget_layout->rowCount(), 0, 1, widget_layout->columnCount());
 
-    about.show();
     about.exec();
 }
 
 void MainWidget::showAboutQt()
 {
-    QMessageBox::aboutQt(this);
+    QMessageBox::aboutQt(backupForm);
 }
 
 void MainWidget::openConfig()

@@ -23,13 +23,13 @@
 #include "database.h"
 #include "backupitem.h"
 
-#include <QDialog>
+#include <QMainWindow>
 
 namespace Ui {
 class BackupManagerForm;
 }
 
-class BackupManagerForm : public QDialog
+class BackupManagerForm : public QMainWindow
 {
     Q_OBJECT
 
@@ -51,6 +51,11 @@ public slots:
 
 private slots:
     void on_filterLineEdit_textChanged(const QString &arg1);
+    void on_actionAboutQt_triggered();
+    void on_actionAboutQcma_triggered();
+    void on_actionQuit_triggered();
+    void on_actionSettings_triggered();
+    void on_actionRefreshDatabase_triggered();
     void saveListing();
 };
 

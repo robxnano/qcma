@@ -19,7 +19,7 @@
 
 #include "backupmanagerform.h"
 #include "ui_backupmanagerform.h"
-#include "cmaobject.h"
+#include "mainwidget.h"
 #include "sforeader.h"
 #include "confirmdialog.h"
 #include "cmautils.h"
@@ -30,12 +30,13 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QJsonDocument>
+#include <QMessageBox>
 #include <QSettings>
 
 #include <vitamtp.h>
 
 BackupManagerForm::BackupManagerForm(Database *db, QWidget *obj_parent) :
-    QDialog(obj_parent), m_db(db),
+    QMainWindow(obj_parent), m_db(db),
     ui(new Ui::BackupManagerForm)
 {
     ui->setupUi(this);
@@ -87,9 +88,10 @@ void BackupManagerForm::saveListing()
 
 void BackupManagerForm::removeEntry(BackupItem *item)
 {
-    ConfirmDialog msgBox;
+    ConfirmDialog msgBox(this);
 
-    msgBox.setMessageText(tr("Are you sure to remove the backup of the following entry?"), item->title);
+    msgBox.setModal(true);
+    msgBox.setMessageText(tr("Are you sure you want to delete this backup?"), item->title);
     msgBox.setMessagePixmap(item->getIconPixmap(), item->getIconWidth());
 
     if(msgBox.exec() == 0) {
@@ -282,4 +284,29 @@ void BackupManagerForm::on_filterLineEdit_textChanged(const QString &arg1)
             }
         }
     }
+}
+
+void BackupManagerForm::on_actionAboutQt_triggered()
+{
+    static_cast<MainWidget*>(parentWidget())->showAboutQt();
+}
+
+void BackupManagerForm::on_actionAboutQcma_triggered()
+{
+    static_cast<MainWidget*>(parentWidget())->showAboutDialog();
+}
+
+void BackupManagerForm::on_actionQuit_triggered()
+{
+    static_cast<MainWidget*>(parentWidget())->stopServer();
+}
+
+void BackupManagerForm::on_actionSettings_triggered()
+{
+    static_cast<MainWidget*>(parentWidget())->openConfig();
+}
+
+void BackupManagerForm::on_actionRefreshDatabase_triggered()
+{
+    static_cast<MainWidget*>(parentWidget())->refreshDatabase();
 }
