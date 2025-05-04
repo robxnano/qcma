@@ -7,7 +7,7 @@ This is an updated version of QCMA (Originally created by [codestation](https://
 
 - [x] Qt 6 build support
 - [x] Replace qmake project with CMake
-- [ ] Flatpak package manifest
+- [x] Flatpak package manifest
 - [ ] Snapcraft manifest
 - [ ] AppImage builder
 - [ ] Visual Studio support (using vcpkg for dependencies)

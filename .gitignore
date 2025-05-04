@@ -4,5 +4,6 @@ qcma.pro.user*
 *.bundle
 org.qcma.*.xml
 buildscripts/windows/driver/QcmaDriver_*.exe
-build/
-build-*/
+/build/
+/build-*/
+/packaging/flatpak/*/

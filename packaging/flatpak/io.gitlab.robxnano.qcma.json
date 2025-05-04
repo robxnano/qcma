@@ -1,0 +1,89 @@
+{
+    "app-id": "io.gitlab.robxnano.qcma",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.9",
+    "sdk": "org.kde.Sdk",
+    "command": "qcma",
+    "finish-args": [
+        "--device=all",
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--filesystem=host",
+        "--filesystem=xdg-run/gvfs",
+        "--filesystem=xdg-run/gvfsd",
+        "--talk-name=com.canonical.AppMenu.Registrar",
+        "--talk-name=org.kde.StatusNotifierWatcher"
+    ],
+    "modules": [
+        {
+            "name": "libusb",
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/lib/*.la",
+                "/lib/pkgconfig",
+                "/include"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/libusb/libusb/releases/download/v1.0.28/libusb-1.0.28.tar.bz2",
+                    "sha256": "966bb0d231f94a474eaae2e67da5ec844d3527a1f386456394ff432580634b29",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1749,
+                        "stable-only": true,
+                        "url-template": "https://github.com/libusb/libusb/releases/download/v$version/libusb-$version.tar.bz2"
+                    }
+                }
+            ],
+            "post-install": [
+                "install -Dm644 COPYING ${FLATPAK_DEST}/share/licenses/libusb/COPYING"
+            ]
+        },
+        {
+            "name": "vitamtp",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/robxnano/vitamtp.git",
+                    "commit": "66555f2c1a06b524dd830f63e90867354e099978"
+                }
+            ],
+            "buildsystem": "cmake-ninja",
+            "cleanup": [
+                "/include",
+                "/lib/cmake",
+                "/lib/pkgconfig",
+                "/lib/*.a",
+                "/lib/*.so"
+            ],
+            "post-install": [
+                "install -Dm644 COPYING ${FLATPAK_DEST}/share/licenses/vitamtp/COPYING"
+            ]
+        },
+        {
+            "name": "qcma",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DENABLE_FFMPEG=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "../../"
+                }
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/cmake",
+                "/lib/pkgconfig",
+                "/lib/*.a",
+                "/lib/*.so"
+            ]
+        }
+    ]
+}
+
