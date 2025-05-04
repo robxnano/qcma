@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(translations);
 
     if(SingleCoreApplication::sendMessage("Another instance of Qcma tried to start")) {
-        QTextStream(stdout) << "An instance of Qcma is already running" << endl;
+        QTextStream(stdout) << "An instance of Qcma is already running" << Qt::endl;
         return 0;
     }
 
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 #endif
 
-    QTextStream(stdout) << "Starting Qcma " << QCMA_VER << endl;
+    QTextStream(stdout) << "Starting Qcma " << QCMA_VER << Qt::endl;
 
     QTranslator translator;
     QString locale = QLocale().system().name();

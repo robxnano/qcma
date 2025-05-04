@@ -22,6 +22,7 @@
 
 #include <QDebug>
 #include <QDesktopWidget>
+#include <QScreen>
 
 const QString PinForm::pinFormat =
     "<html><head/><body>"
@@ -33,7 +34,7 @@ PinForm::PinForm(QWidget *obj_parent) :
     ui(new Ui::PinForm)
 {
     ui->setupUi(this);
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(screen()->geometry().center() - rect().center());
     setFixedSize(size());
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(hide()));

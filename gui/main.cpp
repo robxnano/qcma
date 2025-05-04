@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 #endif
 
-    QTextStream(stdout) << "Starting Qcma " << QCMA_VER << endl;
+    QTextStream(stdout) << "Starting Qcma " << QCMA_VER << Qt::endl;
 
     QTranslator translator;
     QString locale = QLocale().system().name();

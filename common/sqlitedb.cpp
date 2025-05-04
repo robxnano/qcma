@@ -529,7 +529,7 @@ bool SQLiteDB::insertSourceEntry(uint object_id, const QString &path, const QStr
     QFileInfo info(path, name);
     if(info.isFile()) {
         size = QVariant(info.size());
-        date_created = QVariant(info.created().toUTC().toTime_t());
+        date_created = QVariant(info.birthTime().toUTC().toTime_t());
     } else {
         size = QVariant(QVariant::LongLong);
         date_created = QVariant(QVariant::UInt);
@@ -775,7 +775,7 @@ uint SQLiteDB::insertPhotoEntry(const QString &path, const QString &name, int id
     //    return 0;
     //}
 
-    QDateTime date = QFileInfo(path + "/" + name).created();
+    QDateTime date = QFileInfo(path + "/" + name).birthTime();
     date_created = date.toUTC().toTime_t();
     QString month_created = date.toString("yyyy/MM");
 

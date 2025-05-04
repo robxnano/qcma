@@ -22,13 +22,14 @@
 
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include <QScreen>
 
 ProgressForm::ProgressForm(QWidget *obj_parent) :
     QWidget(obj_parent),
     ui(new Ui::ProgressForm)
 {
     ui->setupUi(this);
-    move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    move(screen()->geometry().center() - rect().center());
     setFixedSize(size());
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(cancelConfirm()));

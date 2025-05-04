@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QImage>
+#include <QRandomGenerator>
 #include <QTextStream>
 #include <QTime>
 #include <QSettings>
@@ -93,7 +94,6 @@ void CmaClient::connectWireless()
     typedef CmaClient CC;
 
     QTime now = QTime::currentTime();
-    qsrand(now.msec());
 
     qDebug("Starting wireless_thread: 0x%016" PRIxPTR, (uintptr_t)QThread::currentThreadId());
 
@@ -132,7 +132,7 @@ void CmaClient::processNewConnection(vita_device_t *device)
     QMutexLocker locker(&mutex);
     in_progress = true;
 
-    QTextStream(stdout) << "Vita connected, id: " << VitaMTP_Get_Identification(device) << endl;
+    QTextStream(stdout) << "Vita connected, id: " << VitaMTP_Get_Identification(device) << Qt::endl;
     DeviceCapability vita_info;
 
     if(!vita_info.exchangeInfo(device)) {
@@ -186,6 +186,7 @@ int CmaClient::generatePin(wireless_vita_info_t *info, int *p_err)
     // save the device name in a temporal variable, just in case the pin is rejected
     tempOnlineId = QString(info->name);
     qDebug("Registration request from %s (MAC: %s)", info->name, info->mac_addr);
+    QRandomGenerator ran = QRandomGenerator(QRandomGenerator::system()->generate());
 
     QString staticPin = QSettings().value("staticPin").toString();
 
@@ -196,17 +197,17 @@ int CmaClient::generatePin(wireless_vita_info_t *info, int *p_err)
         pin = staticPin.toInt(&ok);
 
         if(!ok) {
-            pin = rand() % 10000 * 10000 | rand() % 10000;
+            pin = ran.generate() % 10000 * 10000 | ran.generate() % 10000;
         }
     } else {
-        pin = rand() % 10000 * 10000 | rand() % 10000;
+        pin = ran.generate() % 10000 * 10000 | ran.generate() % 10000;
     }
 
     QTextStream out(stdout);
     out << "Your registration PIN for " << info->name << " is: ";
     out.setFieldWidth(8);
     out.setPadChar('0');
-    out << pin << endl;
+    out << pin << Qt::endl;
 
     qDebug("PIN: %08i", pin);
 
@@ -262,7 +263,7 @@ void CmaClient::enterEventLoop(vita_device_t *device)
 
 int CmaClient::stop()
 {
-    QTextStream(stdout) << "Stopping Qcma" << endl;
+    QTextStream(stdout) << "Stopping Qcma" << Qt::endl;
 
     if(!isActive()) {
         return -1;
