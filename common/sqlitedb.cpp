@@ -152,7 +152,7 @@ SQLiteDB::SQLiteDB(QObject *obj_parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(process()));
 
     // fetch a configured database path if it exists
-    QString db_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString db_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
     db_path = QSettings().value("databasePath", db_path).toString();
     QDir(QDir::root()).mkpath(db_path);
 
@@ -218,7 +218,7 @@ void SQLiteDB::clear()
 {
     db.close();
     //QSqlDatabase::removeDatabase("QSQLITE");
-    QString db_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    QString db_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
     db_path = QSettings().value("databasePath", db_path).toString();
     QFile(db_path + QDir::separator() + "qcma.sqlite").remove();
     load();
@@ -521,13 +521,13 @@ bool SQLiteDB::insertSourceEntry(uint object_id, const QString &path, const QStr
     QFileInfo info(path, name);
     if(info.isFile()) {
         size = QVariant(info.size());
-        date_created = QVariant(info.birthTime().toUTC().toTime_t());
+        date_created = QVariant(info.birthTime().toUTC().toSecsSinceEpoch());
     } else {
         size = QVariant(QVariant::LongLong);
-        date_created = QVariant(QVariant::UInt);
+        date_created = QVariant(QVariant::LongLong);
     }
 
-    date_modified = QVariant(info.lastModified().toUTC().toTime_t());
+    date_modified = QVariant(info.lastModified().toUTC().toSecsSinceEpoch());
 
     QSqlQuery query;
     query.prepare("REPLACE INTO sources (object_id, path, size, date_created, date_modified)"
@@ -754,7 +754,7 @@ uint SQLiteDB::insertPhotoEntry(const QString &path, const QString &name, int id
 {
     int ohfi;
     //QImage img;
-    uint date_created;
+    qint64 date_created;
     int width, height, file_format, photo_codec;
 
     int cma_file_type = checkFileType(name, VITA_OHFI_PHOTO);
@@ -768,7 +768,7 @@ uint SQLiteDB::insertPhotoEntry(const QString &path, const QString &name, int id
     //}
 
     QDateTime date = QFileInfo(path + "/" + name).birthTime();
-    date_created = date.toUTC().toTime_t();
+    date_created = date.toUTC().toSecsSinceEpoch();
     QString month_created = date.toString("yyyy/MM");
 
     width = 0; //img.width();
@@ -806,7 +806,7 @@ uint SQLiteDB::insertSavedataEntry(const QString &path, const QString &name, int
 {
     int ohfi;
     SfoReader reader;
-    uint date_updated = 0;
+    qint64 date_updated = 0;
     const char *title = NULL;
     const char *savedata_detail = NULL;
     const char *savedata_directory = NULL;
@@ -818,7 +818,7 @@ uint SQLiteDB::insertSavedataEntry(const QString &path, const QString &name, int
         title = reader.value("TITLE", utf8name.constData());
         savedata_detail = reader.value("SAVEDATA_DETAIL", "");
         savedata_directory = reader.value("SAVEDATA_DIRECTORY", utf8name.constData());
-        date_updated = QFileInfo(path + "/" + name).lastModified().toUTC().toTime_t();
+        date_updated = QFileInfo(path + "/" + name).lastModified().toUTC().toSecsSinceEpoch();
     }
 
     if((ohfi = insertDefaultEntry(path, name, title, id_parent, type)) == 0) {

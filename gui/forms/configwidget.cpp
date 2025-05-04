@@ -52,7 +52,7 @@ void ConfigWidget::connectSignals()
     connect(ui->appBtn, SIGNAL(clicked()), mapper, SLOT(map()));
     connect(ui->urlBtn, SIGNAL(clicked()), mapper, SLOT(map()));
     connect(ui->pkgBtn, SIGNAL(clicked()), mapper, SLOT(map()));
-    connect(mapper, SIGNAL(mapped(int)), this, SLOT(browseBtnPressed(int)));
+    connect(mapper, SIGNAL(mappedInt(int)), this, SLOT(browseBtnPressed(int)));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 

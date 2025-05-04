@@ -21,7 +21,6 @@
 #include "ui_pinform.h"
 
 #include <QDebug>
-#include <QDesktopWidget>
 #include <QScreen>
 
 const QString PinForm::pinFormat =

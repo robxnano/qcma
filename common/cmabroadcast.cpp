@@ -62,7 +62,7 @@ CmaBroadcast::CmaBroadcast(QObject *obj_parent) :
     socket = new QUdpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
 
-    QHostAddress host_address(QHostAddress::AnyIPv4);
+    QHostAddress host_address(QHostAddress::Any);
 
     if(!socket->bind(host_address, QCMA_REQUEST_PORT, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint)) {
         qCritical() << "Failed to bind address for UDP broadcast";
@@ -84,7 +84,7 @@ void CmaBroadcast::readPendingDatagrams()
             QMutexLocker locker(&mutex);
             socket->writeDatagram(reply, cma_sender, senderPort);
         } else {
-            qWarning("Unknown request: %.*s\n", datagram.length(), datagram.constData());
+            std::printf("Unknown request: %.*s\n", (int) datagram.length(), datagram.constData());
         }
     }
 }

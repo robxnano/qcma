@@ -649,7 +649,7 @@ void CmaEvent::vitaEventSendHttpObjectFromURL(vita_event_t *cma_event, int event
         }
     }
 
-    qDebug("Sending %i bytes of data for HTTP request %s", data.size(), url);
+    qDebug("Sending %lli bytes of data for HTTP request %s", (qsizetype) data.size(), url);
 
     if(VitaMTP_SendHttpObjectFromURL(m_device, eventId, data.data(), data.size()) != PTP_RC_OK) {
         qWarning("Failed to send HTTP object");
