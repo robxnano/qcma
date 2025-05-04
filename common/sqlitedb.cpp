@@ -523,8 +523,8 @@ bool SQLiteDB::insertSourceEntry(uint object_id, const QString &path, const QStr
         size = QVariant(info.size());
         date_created = QVariant(info.birthTime().toUTC().toSecsSinceEpoch());
     } else {
-        size = QVariant(QVariant::LongLong);
-        date_created = QVariant(QVariant::LongLong);
+        size = QVariant(QMetaType(QMetaType::LongLong));
+        date_created = QVariant(QMetaType(QMetaType::LongLong));
     }
 
     date_modified = QVariant(info.lastModified().toUTC().toSecsSinceEpoch());

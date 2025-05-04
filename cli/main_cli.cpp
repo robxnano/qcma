@@ -142,8 +142,8 @@ int main(int argc, char *argv[])
     }
 
     QTranslator system_translator;
-    system_translator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    app.installTranslator(&system_translator);
+    if(system_translator.load("qt_" + locale, QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+       app.installTranslator(&system_translator);
 
     qDebug("Starting main thread: 0x%016" PRIxPTR, (uintptr_t)QThread::currentThreadId());
 
