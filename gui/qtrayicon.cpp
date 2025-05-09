@@ -27,7 +27,7 @@ QTrayIcon::QTrayIcon(QWidget *obj_parent)
     : TrayIndicator(obj_parent)
 {
 #ifdef Q_OS_LINUX
-    notify_init("Qcma");
+    notify_init("io.gitlab.robxnano.qcma");
 #endif
     setAttribute(Qt::WA_TransparentForMouseEvents);
 }
@@ -71,7 +71,7 @@ void QTrayIcon::init()
     m_tray_icon->setToolTip("Qcma");
     m_tray_icon->setContextMenu(tray_icon_menu);
 #ifdef Q_OS_LINUX
-    notif = notify_notification_new(qPrintable(tr("Information")), NULL, "dialog-information");
+    notif = notify_notification_new(qPrintable(tr("Information")), NULL, "dialog-information-symbolic");
 #endif
 }
 
@@ -79,7 +79,7 @@ void QTrayIcon::init()
 void QTrayIcon::showMessage(const QString &title, const QString &message)
 {
 #ifdef Q_OS_LINUX
-    notify_notification_update(notif, qPrintable(title), qPrintable(message), "dialog-information");
+    notify_notification_update(notif, qPrintable(title), qPrintable(message), "dialog-information-symbolic");
     notify_notification_show(notif, NULL);
 #else
     m_tray_icon->showMessage(title, message);
