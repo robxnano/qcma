@@ -127,6 +127,7 @@ int main(int argc, char *argv[])
     // set the organization/application for QSettings to work properly
     app.setOrganizationName("codestation");
     app.setApplicationName("qcma");
+    app.setDesktopFileName("io.gitlab.robxnano.qcma");
 
     //TODO: check if this is actually needed since we don't have a main window by default
     QApplication::setQuitOnLastWindowClosed(false);
