@@ -13,5 +13,6 @@ buildscripts/windows/driver/QcmaDriver_*.exe
 *.snap
 .vs/
 .vscode/
+CMakeLists.txt.user
 CMakeSettings.json
 out/

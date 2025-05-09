@@ -34,7 +34,7 @@
       <item>
        <layout class="QFormLayout" name="formLayout_4">
         <property name="fieldGrowthPolicy">
-         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
         </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_4">
@@ -104,7 +104,7 @@
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -140,10 +140,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>857</width>
      <height>27</height>
     </rect>
-   </property><widget class="QMenu" name="menuFile">
+   </property>
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
     </property>
@@ -176,6 +177,9 @@
    <property name="text">
     <string>&amp;Settings…</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+,</string>
+   </property>
   </action>
   <action name="actionRefreshDatabase">
    <property name="text">
@@ -185,6 +189,9 @@
   <action name="actionQuit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
