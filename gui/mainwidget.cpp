@@ -23,6 +23,7 @@
 
 #include "qlistdb.h"
 #include "sqlitedb.h"
+#include "version.hpp"
 
 #include "qtrayicon.h"
 
@@ -148,7 +149,7 @@ void MainWidget::showAboutDialog()
     QMessageBox about(backupForm);
 
     about.setModal(true);
-    about.setText(QString("<h3>Qcma</h3>") + QCMA_VER);
+    about.setText(QString("<h3>Qcma</h3>") + Qcma::Common::version());
     about.setWindowTitle(tr("About Qcma"));
 
     about.setInformativeText(tr("Qcma allows you to backup your PS Vita games & manage your songs, "

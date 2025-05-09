@@ -33,6 +33,7 @@
 
 #include "singlecoreapplication.h"
 #include "headlessmanager.h"
+#include "version.hpp"
 
 static void noDebugOutput(QtMsgType type, const QMessageLogContext &, const QString & msg)
 {
@@ -120,7 +121,7 @@ int main(int argc, char *argv[])
         qInstallMessageHandler(noDebugOutput);
     }
 
-    QTextStream(stdout) << "Starting Qcma " << QCMA_VER << Qt::endl;
+    QTextStream(stdout) << "Starting Qcma " << Qcma::Common::version() << Qt::endl;
 
     QTranslator translator;
     QString locale = QLocale().system().name();

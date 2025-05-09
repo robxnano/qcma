@@ -16,6 +16,7 @@ add_library(qcma_common
     qlistdb.cpp qlistdb.h
     sforeader.cpp sforeader.h
     sqlitedb.cpp sqlitedb.h
+    version.cpp version.hpp
 )
 
 target_include_directories(qcma_common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -99,12 +100,13 @@ if(WIN32 AND NOT MSVC)
     target_compile_options(qcma_common PUBLIC -mno-ms-bitfields)
 endif()
 
-target_compile_definitions(qcma_common PUBLIC "QCMA_VER=\"${QCMA_VER}\"")
+set_source_files_properties(version.cpp PROPERTIES 
+    COMPILE_DEFINITIONS "QCMA_VER=\"${QCMA_VER}\""
+)
 
 if(QCMA_BUILD_BRANCH AND QCMA_BUILD_HASH)
-    target_compile_definitions(qcma_common PUBLIC
-        "QCMA_BUILD_BRANCH=\"${QCMA_BUILD_BRANCH}\""
-        "QCMA_BUILD_HASH=\"${QCMA_BUILD_HASH}\""
+    set_source_files_properties(version.cpp PROPERTIES 
+        COMPILE_DEFINITIONS "QCMA_VER=\"${QCMA_VER}\";QCMA_BUILD_BRANCH=\"${QCMA_BUILD_BRANCH}\";QCMA_BUILD_HASH=\"${QCMA_BUILD_HASH}\""
     )
 endif()
 

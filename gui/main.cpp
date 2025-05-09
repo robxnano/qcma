@@ -32,6 +32,7 @@
 
 #include "singleapplication.h"
 #include "mainwidget.h"
+#include "version.hpp"
 
 static void noMessageOutput(QtMsgType type, const QMessageLogContext &, const QString & str)
 {
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
         qInstallMessageHandler(noMessageOutput);
     }
 
-    QTextStream(stdout) << "Starting Qcma " << QCMA_VER << Qt::endl;
+    QTextStream(stdout) << "Starting Qcma " << Qcma::Common::version() << Qt::endl;
 
     QTranslator translator;
     QString locale = QLocale().system().name();
