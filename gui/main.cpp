@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     qDebug("Starting main thread: 0x%016" PRIxPTR, (uintptr_t)QThread::currentThreadId());
 
     // set the organization/application for QSettings to work properly
-    app.setOrganizationName("codestation");
+    app.setOrganizationName("qcma");
     app.setApplicationName("qcma");
     app.setDesktopFileName("io.gitlab.robxnano.qcma");
 
