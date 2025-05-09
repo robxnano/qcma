@@ -44,12 +44,12 @@ endif()
 set(gui_resource_files
     "resources/images/edit-clear-locationbar-rtl.png"
     "resources/images/qcma.png"
-    "resources/images/qcma_off.png"
-    "resources/images/qcma_on.png"
-    "resources/images/tray/qcma_off.png"
-    "resources/images/tray/qcma_off_16.png"
-    "resources/images/tray/qcma_on.png"
-    "resources/images/tray/qcma_on_16.png"
+    "resources/images/qcma-connected.png"
+    "resources/images/qcma-disconnected.png"
+    "resources/images/tray/qcma-disconnected.png"
+    "resources/images/tray/qcma-disconnected_16.png"
+    "resources/images/tray/qcma-connected.png"
+    "resources/images/tray/qcma-connected_16.png"
 )
 
 qt_add_resources(qcma gui PREFIX "/main" FILES ${gui_resource_files})
@@ -78,5 +78,14 @@ elseif(NOT APPLE AND NOT ANDROID)
             DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES resources/images/qcma.png
             RENAME io.gitlab.robxnano.qcma.png
-            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/64x64/apps)    
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/64x64/apps)
+    install(FILES resources/images/qcma-symbolic.svg
+            RENAME io.gitlab.robxnano.qcma-symbolic.svg
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/symbolic/apps)
+    install(FILES resources/images/qcma-symbolic.svg
+            RENAME io.gitlab.robxnano.qcma-disconnected-symbolic.svg
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/symbolic/apps)
+    install(FILES resources/images/qcma-connected-symbolic.svg
+            RENAME io.gitlab.robxnano.qcma-connected-symbolic.svg
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/symbolic/apps)
 endif()

@@ -93,7 +93,11 @@ bool QTrayIcon::isVisible()
 
 void QTrayIcon::setIcon(const QString &icon)
 {
-    QIcon qicon(":/main/resources/images/" + icon + ".png");
+#ifndef Q_OS_WIN32
+    QIcon qicon(QIcon::fromTheme("io.gitlab.robxnano.qcma-" + icon + "-symbolic", QIcon(":/main/resources/images/qcma-" + icon + ".png")));
+#else
+    QIcon qicon(":/main/resources/images/tray/qcma-" + icon + "_16.png");
+#endif
     m_tray_icon->setIcon(qicon);
 }
 

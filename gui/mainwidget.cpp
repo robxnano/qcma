@@ -85,11 +85,7 @@ void MainWidget::stopServer()
 
 void MainWidget::deviceDisconnect()
 {
-#ifndef Q_OS_WIN32
-    trayIcon->setIcon("qcma_off");
-#else
-    trayIcon->setIcon("tray/qcma_off_16");
-#endif
+    trayIcon->setIcon("disconnected");
     qDebug("Icon changed - disconnected");
     setTrayTooltip(tr("Disconnected"));
     receiveMessage(tr("The device has been disconnected"));
@@ -97,11 +93,7 @@ void MainWidget::deviceDisconnect()
 
 void MainWidget::deviceConnect(QString message)
 {
-#ifndef Q_OS_WIN32
-    trayIcon->setIcon("qcma_on");
-#else
-    trayIcon->setIcon("tray/qcma_on_16");
-#endif
+    trayIcon->setIcon("connected");
     qDebug("Icon changed - connected");
     setTrayTooltip(message);
     receiveMessage(message);
@@ -240,11 +232,7 @@ void MainWidget::createTrayIcon()
     trayIcon = createTrayObject(this);
     trayIcon->init();
 
-#ifndef Q_OS_WIN32
-    trayIcon->setIcon("qcma_off");
-#else
-    trayIcon->setIcon("tray/qcma_off_16");
-#endif
+    trayIcon->setIcon("disconnected");
     trayIcon->show();
 
     connect(trayIcon, SIGNAL(openConfig()), this, SLOT(openConfig()));
