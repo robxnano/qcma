@@ -79,6 +79,12 @@ elseif(NOT APPLE AND NOT ANDROID)
     install(FILES resources/images/qcma.png
             RENAME io.gitlab.robxnano.qcma.png
             DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/64x64/apps)
+    install(FILES resources/images/qcma_256.png
+            RENAME io.gitlab.robxnano.qcma.png
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/256x256/apps)
+    install(FILES resources/images/qcma.svg
+            RENAME io.gitlab.robxnano.qcma.svg
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps)
     install(FILES resources/images/qcma-symbolic.svg
             RENAME io.gitlab.robxnano.qcma-symbolic.svg
             DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/symbolic/apps)
