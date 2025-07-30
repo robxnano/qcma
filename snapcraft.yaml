@@ -44,8 +44,10 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_BUILD_TYPE=Release
     build-packages:
+      - libusb-1.0-0-dev
       - libxml2-dev
     stage-packages:
+      - libusb-1.0-0
       - libxml2
     prime:
       - -usr/etc
