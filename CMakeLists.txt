@@ -77,6 +77,6 @@ if(INSTALL_SERVICE)
     # Unit files are always installed in lib/systemd/{user,system}
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/user/qcma.service
             DESTINATION ${SYSTEMD_UNIT_DIR}/user)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/systemd/qcma.service
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/system/qcma.service
             DESTINATION ${SYSTEMD_UNIT_DIR}/system)
 endif()
