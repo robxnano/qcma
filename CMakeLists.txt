@@ -28,18 +28,24 @@ if(LINUX AND NOT ANDROID)
     set(SYSTEMD_UNIT_DIR "lib/systemd" CACHE PATH "systemd unit files directory root (lib/systemd)")
 endif()
 
-execute_process(COMMAND git describe --tags
-                OUTPUT_VARIABLE QCMA_VER
-                ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-execute_process(COMMAND git rev-parse --abbrev-ref HEAD
-                OUTPUT_VARIABLE QCMA_BUILD_BRANCH
-                ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-execute_process(COMMAND git rev-parse --short HEAD
-                OUTPUT_VARIABLE QCMA_BUILD_HASH
-                ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+find_package(Git)
+
+if(Git_FOUND)
+    execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags
+                    OUTPUT_VARIABLE QCMA_VER
+                    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
+                    OUTPUT_VARIABLE QCMA_BUILD_BRANCH
+                    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+                    OUTPUT_VARIABLE QCMA_BUILD_HASH
+                    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+endif()
 
 if(NOT QCMA_VER)
     set(QCMA_VER "v${PROJECT_VERSION}")
+    set(QCMA_BUILD_BRANCH "")
+    set(QCMA_BUILD_HASH "")
 endif()
 
 if(USE_QT6)

@@ -104,11 +104,9 @@ set_source_files_properties(version.cpp PROPERTIES
     COMPILE_DEFINITIONS "QCMA_VER=\"${QCMA_VER}\""
 )
 
-if(QCMA_BUILD_BRANCH AND QCMA_BUILD_HASH)
-    set_source_files_properties(version.cpp PROPERTIES 
-        COMPILE_DEFINITIONS "QCMA_VER=\"${QCMA_VER}\";QCMA_BUILD_BRANCH=\"${QCMA_BUILD_BRANCH}\";QCMA_BUILD_HASH=\"${QCMA_BUILD_HASH}\""
-    )
-endif()
+set_source_files_properties(version.cpp PROPERTIES 
+    COMPILE_DEFINITIONS "QCMA_VER=\"${QCMA_VER}\";QCMA_BUILD_BRANCH=\"${QCMA_BUILD_BRANCH}\";QCMA_BUILD_HASH=\"${QCMA_BUILD_HASH}\""
+)
 
 if(BUILD_SHARED_LIBS)
     install(TARGETS qcma_common
