@@ -1,0 +1,37 @@
+name: Ubuntu Build
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  build:
+    name: Build on Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+          libnotify-dev libusb-1.0-0-dev libxml2-dev \
+          qt6-base-dev qt6-tools-dev qt6-tools-dev-tools
+
+    - name: Build Qcma
+      run: |
+        cmake -B build \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DINSTALL_SERVICE=ON \
+          -G Ninja
+        cmake --build build
+        DESTDIR=$PWD/install cmake --install build
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Qcma
+        path: install/*
