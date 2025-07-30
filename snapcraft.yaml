@@ -17,6 +17,7 @@ apps:
     desktop: usr/share/applications/io.gitlab.robxnano.qcma.desktop
     plugs:
       - gsettings
+      - home
       - mount-observe
       - network
       - raw-usb
@@ -25,6 +26,13 @@ apps:
     common-id: io.gitlab.robxnano.qcma_cli
     extensions:
       - kde-neon-6
+
+hooks:
+  configure:
+    command-chain:
+      - snap/command-chain/hooks-configure-desktop
+    plugs:
+      - desktop
 
 parts:
   vitamtp:
