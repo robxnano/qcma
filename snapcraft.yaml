@@ -1,6 +1,5 @@
 name: qcma
 adopt-info: qcma
-grade: stable
 confinement: strict
 base: core24
 compression: lzo
@@ -65,6 +64,11 @@ parts:
     source: .
     parse-info:
       - usr/share/metainfo/io.gitlab.robxnano.qcma.metainfo.xml
+    override-pull: |
+      craftctl default
+      [ $(git describe --tags --exact-match HEAD 2>/dev/null) ] && GRADE=stable || GRADE=devel
+      craftctl set grade=$GRADE
+      craftctl set version="$(git describe --tags HEAD)"
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr

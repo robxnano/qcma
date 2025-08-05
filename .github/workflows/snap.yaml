@@ -1,4 +1,4 @@
-name: Snap Build
+name: Snapcraft
 
 on: [push, pull_request]
 
@@ -8,17 +8,25 @@ concurrency:
 
 jobs:
   build:
-    name: Snap Build
+    name: Build Snap
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
     - name: Build Qcma
       id: build
       uses: snapcore/action-build@v1
-
-    - name: Upload Snap
+    - name: Upload Qcma
       uses: actions/upload-artifact@v4
       with:
         name: Qcma
         path: ${{ steps.build.outputs.snap }}
+    - name: Publish to Snapcraft
+      env:
+        SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+      if: >-
+        ${{ env.SNAPCRAFT_STORE_CREDENTIALS &&
+        github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') }}
+      uses: snapcore/action-publish@v1
+      with:
+        snap: ${{ steps.build.outputs.snap }}
+        release: ${{ startsWith(github.ref, 'refs/tags') && 'beta' || 'edge' }}
